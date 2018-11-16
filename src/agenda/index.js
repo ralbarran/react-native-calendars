@@ -137,6 +137,12 @@ export default class AgendaView extends Component {
   onLayout(event) {
     this.viewHeight = event.nativeEvent.layout.height;
     this.viewWidth = event.nativeEvent.layout.width;
+    this.calendar.scrollToDay(
+      this.state.selectedDay.clone(),
+      this.calendarOffset(),
+      false
+    );
+
     this.forceUpdate();
   }
 
@@ -169,7 +175,7 @@ export default class AgendaView extends Component {
     this.onTouchEnd();
     const currentY = e.nativeEvent.contentOffset.y;
     this.knobTracker.add(currentY);
-    const projectedY = currentY + this.knobTracker.estimateSpeed() * 250 /*ms*/;
+    const projectedY = currentY + this.knobTracker.estimateSpeed() * 250; /*ms*/
     const maxY = this.initialScrollPadPosition();
     const snapY = projectedY > maxY / 2 ? maxY : 0;
     this.setScrollPadPosition(snapY, true);
